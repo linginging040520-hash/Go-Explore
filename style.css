@@ -1,90 +1,270 @@
+/* 1. Basic Setup & Nature Fonts */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
 body {
-  margin: 0;
-  font-family: Arial;
-  color: white;
-
-  /* background-image */
-  background-image: url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e");
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+    background-color: #f4f7f4; /* Very light green-grey for a natural feel */
+    color: #333;
+    line-height: 1.6;
 }
 
-/* overlay */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.45);
-  z-index: -1;
+/* 2. Navigation Bar */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* ensure content above overlay */
-body > * {
-  position: relative;
-  z-index: 1;
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2d5a27; /* Deep Forest Green */
+    text-decoration: none;
 }
 
-/* card */
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li {
+    margin-left: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+}
+
+/* 3. Hero Section (The Immersive Nature Part) */
+.hero {
+    position: relative;
+    height: 80vh; /* Takes up 80% of the screen height */
+    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                      url('https://images.unsplash.com/photo-1596401057633-54a8fe8ef647'); /* Sarawak-style forest */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    padding: 0 20px;
+    transition: background-image 1.5s ease-in-out; /* Added for the JavaScript transition effect */
+}
+
+/* Hero Overlay to keep text readable */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2; /* Ensures text stays on top of the dark overlay */
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+}
+
+/* 4. The Search Bar */
+.search-container {
+    background: white;
+    padding: 10px;
+    display: flex;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 8px; /* Clean, modern edges */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    margin-top: 30px;
+}
+
+.search-container input {
+    flex: 1;
+    border: none;
+    padding: 15px;
+    font-size: 1rem;
+    outline: none;
+}
+
+.search-btn {
+    background-color: #2d5a27;
+    color: white;
+    border: none;
+    padding: 0 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.search-btn:hover {
+    background-color: #3e7a36;
+}
+
+/* 5. Destination Cards Grid Container */
+.container {
+    padding: 50px 5%;
+}
+
+.section-title {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: #2d5a27;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 50px 5%;
+}
+
+/* Card Style for your team's JavaScript output */
 .card {
-  background: rgba(255,255,255,0.12);
-  backdrop-filter: blur(12px);
-  margin: 15px;
-  padding: 15px;
-  border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-  cursor: pointer;
-  transition: 0.2s;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
 }
 
 .card:hover {
-  transform: scale(1.02);
+    transform: translateY(-10px);
 }
 
-/* text */
-.card h3 {
-  color: #ffd84d;
+.card-content {
+    padding: 20px;
 }
 
-/* profile */
-.profile-card {
-  margin: 20px;
-  padding: 20px;
-  background: rgba(255,255,255,0.12);
-  backdrop-filter: blur(12px);
-  border-radius: 16px;
-  text-align: center;
+.card h2 {
+    margin-bottom: 10px;
+    font-size: 1.3rem;
 }
 
-.avatar {
-  font-size: 60px;
+.card p {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 15px;
 }
 
-.bio {
-  color: #ddd;
-  font-size: 14px;
+.btn-view {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #2d5a27;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 0.8rem;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 30px 5%;
 }
 
-/* stats */
-.stats {
-  display: flex;
-  justify-content: space-around;
-  margin: 20px 0;
+.card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
 }
 
-.stats b {
-  display: block;
-  color: #ffd84d;
+.card:hover {
+    transform: translateY(-10px);
 }
 
-/* button */
-.btn {
-  padding: 10px 15px;
-  border: none;
-  border-radius: 10px;
-  background: #4facfe;
-  color: white;
-  cursor: pointer;
+.card-content {
+    padding: 20px;
+}
+
+.card h2 {
+    margin-bottom: 8px;
+    font-size: 1.3rem;
+    color: #2d5a27;
+}
+
+.card p {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.btn-view {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #2d5a27;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+.booking-section, .dashboard-section {
+    padding: 50px 5%;
+    background: #fff;
+    margin: 40px 0;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.booking-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    margin-top: 20px;
+}
+
+.booking-form label {
+    margin-top: 10px;
+    font-weight: 500;
+}
+
+.booking-form input, .booking-form select {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.dashboard-card {
+    background: #f4f7f4;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+.tag-btn {
+    background-color: #e6a817;
+    color: white;
+    border: none;
+    padding: 10px 12px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.tag-btn:hover {
+    background-color: #cc930e;
 }
