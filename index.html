@@ -126,6 +126,7 @@ body {
 <script>
 function openDetail(title, desc) {
   document.getElementById("home").classList.remove("active");
+  document.getElementById("user").classList.remove("active");
   document.getElementById("detail").classList.add("active");
 
   document.getElementById("title").innerText = title;
@@ -134,7 +135,20 @@ function openDetail(title, desc) {
 
 function goBack() {
   document.getElementById("detail").classList.remove("active");
+  document.getElementById("user").classList.remove("active");
   document.getElementById("home").classList.add("active");
+}
+
+function goHome() {
+  document.getElementById("detail").classList.remove("active");
+  document.getElementById("user").classList.remove("active");
+  document.getElementById("home").classList.add("active");
+}
+
+function goUser() {
+  document.getElementById("home").classList.remove("active");
+  document.getElementById("detail").classList.remove("active");
+  document.getElementById("user").classList.add("active");
 }
 </script>
 
