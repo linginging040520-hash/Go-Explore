@@ -1,96 +1,257 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoTravel | Explore Sarawak</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>GoTravel App</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #f4f6fb;
+}
+
+/* header */
+.header {
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  padding: 18px;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* pages */
+.page {
+  display: none;
+  padding-bottom: 70px;
+}
+
+.page.active {
+  display: block;
+}
+
+/* card */
+.card {
+  background: white;
+  margin: 15px;
+  padding: 15px;
+  border-radius: 16px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: scale(1.02);
+}
+
+/* detail */
+.detail {
+  padding: 20px;
+}
+
+.back {
+  margin: 15px;
+  display: inline-block;
+  color: #4facfe;
+  cursor: pointer;
+}
+
+/* profile */
+.profile-card {
+  margin: 20px;
+  padding: 20px;
+  background: white;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+}
+
+.avatar {
+  font-size: 60px;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 0;
+}
+
+.stats b {
+  display: block;
+  color: #4facfe;
+}
+
+/* history */
+#historyList .card {
+  background: white;
+}
+
+/* nav */
+.nav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: white;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+}
+
+.nav div {
+  font-size: 12px;
+  color: gray;
+  cursor: pointer;
+}
+</style>
 </head>
+
 <body>
-    <nav class="navbar">
-        <div class="logo-container">
-            <span class="logo-text">GoTravel</span>
-        </div>
-        <div class="nav-links">
-            <a href="#destinations">Attractions</a>
-            <a href="#booking">Book Tickets</a>
-            <a href="#dashboard">My Dashboard</a>
-            <a href="#" id="authLink" class="login" onclick="toggleAuth()">Log in</a>
-            <button class="btn-signup" onclick="toggleAuth()">Sign Up</button>
-        </div>
-    </nav>
 
-    <header class="hero">
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1>Explore Sarawak's Natural Wonders</h1>
-            <p>Discover the best attractions in Sarawak.</p>
-            <div class="search-container">
-                <input type="text" id="searchInput" placeholder="Search for attractions..." onkeyup="filterDestinations()">
-                <button class="search-btn">Search</button>
-            </div>
-        </div>
-    </header>
+<div class="header">🌍 GoTravel App</div>
 
-    <section class="destinations" id="destinations">
-        <h2>Popular Destinations</h2>
-        <div class="grid-container" id="destination-grid"></div>
-    </section>
+<!-- HOME -->
+<div id="home" class="page active">
 
-    <section class="booking-section" id="booking">
-        <h2>Book Your Attraction Tickets</h2>
-        <form class="booking-form" onsubmit="handleBooking(event)">
-            <label for="book-user">Your Name:</label>
-            <input type="text" id="book-user" placeholder="John Doe" required>
+  <div class="card" onclick="openDetail('Kuching Waterfront','Nice river view 🌅')">
+    <h3>Kuching Waterfront</h3>
+    <p>Click to view details</p>
+    <button onclick="event.stopPropagation(); savePlace('Kuching Waterfront')">❤️ Save</button>
+  </div>
 
-            <label for="book-place">Choose Destination:</label>
-            <select id="book-place" required>
-                <option value="Gunung Mulu National Park">Gunung Mulu National Park</option>
-                <option value="Borneo Cultures Museum">Borneo Cultures Museum</option>
-                <option value="Tanjung Datu National Park">Tanjung Datu National Park</option>
-                <option value="Fairy Cave">Fairy Cave</option>
-            </select>
+  <div class="card" onclick="openDetail('Damai Beach','Relax beach vibe 🏖️')">
+    <h3>Damai Beach</h3>
+    <p>Click to view details</p>
+    <button onclick="event.stopPropagation(); savePlace('Damai Beach')">❤️ Save</button>
+  </div>
 
-            <label for="book-tickets">Number of Tickets:</label>
-            <input type="number" id="book-tickets" min="1" value="1" required>
+  <div class="card" onclick="openDetail('Borneo Highlands','Cool mountain air 🌿')">
+    <h3>Borneo Highlands</h3>
+    <p>Click to view details</p>
+    <button onclick="event.stopPropagation(); savePlace('Borneo Highlands')">❤️ Save</button>
+  </div>
 
-            <label for="book-date">Date of Visit:</label>
-            <input type="date" id="book-date" required>
+</div>
 
-            <button type="submit" class="search-btn" style="margin-top: 15px; width: 100%;">Pay Now</button>
-        </form>
-    </section>
+<!-- DETAIL -->
+<div id="detail" class="page">
 
-    <section class="dashboard-section" id="dashboard">
-        <h2>My Dashboard</h2>
-        <div class="dashboard-card">
-            <h3>Account Details</h3>
-            <p><strong>Username:</strong> <span id="dash-user">GuestUser</span></p>
-            <p><strong>Status:</strong> <span style="color: #2d5a27;">Active Tourist</span></p>
-        </div>
+  <div class="back" onclick="goHome()">← Back</div>
 
-        <h3>Saved Locations (Tag & Map)</h3>
-        <ul id="saved-locations-list" style="list-style-type: none; padding: 10px;">
-            <li>No saved locations yet. Save a destination below!</li>
-        </ul>
+  <div class="detail">
+    <h2 id="title"></h2>
+    <p id="desc"></p>
+  </div>
 
-        <h3>Booking History</h3>
-        <ul id="booking-history-list" style="list-style-type: none; padding: 10px;">
-            <li>No bookings made yet.</li>
-        </ul>
+</div>
 
-        <h3>Search History</h3>
-        <ul id="search-history-list" style="list-style-type: none; padding: 10px;">
-            <li>No recent searches.</li>
-        </ul>
+<!-- USER -->
+<div id="user" class="page">
 
-        <div style="margin-top: 20px;">
-            <button class="btn-signup" onclick="lockAccount()">Lock Account</button>
-            <button class="tag-btn" onclick="unlockAccount()" style="background-color: #2d5a27;">Unlock Account</button>
-        </div>
-    </section>
+  <div class="profile-card">
+    <div class="avatar">👤</div>
+    <h2>Irene</h2>
+    <p>CS Student | UI Explorer ✨</p>
 
-    <script src="script.js"></script>
-    <script src="dashboard.js"></script>
+    <div class="stats">
+      <div><b>3</b><span>Saved</span></div>
+      <div><b id="histCount">0</b><span>History</span></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- HISTORY -->
+<div id="history" class="page">
+
+  <div class="header">📜 History</div>
+
+  <div id="historyList"></div>
+
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <div onclick="goHome()">🏠<br>Home</div>
+  <div onclick="goHistory()">📜<br>History</div>
+  <div onclick="goUser()">👤<br>User</div>
+</div>
+
+<script>
+
+let history = JSON.parse(localStorage.getItem("history")) || [];
+let saved = JSON.parse(localStorage.getItem("saved")) || [];
+
+/* page switch */
+function switchPage(id) {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+/* detail */
+function openDetail(title, desc) {
+  switchPage("detail");
+
+  document.getElementById("title").innerText = title;
+  document.getElementById("desc").innerText = desc;
+
+  saveHistory(title);
+}
+
+/* nav */
+function goHome() {
+  switchPage("home");
+}
+
+function goUser() {
+  switchPage("user");
+  document.getElementById("histCount").innerText = history.length;
+}
+
+function goHistory() {
+  switchPage("history");
+  renderHistory();
+}
+
+/* history */
+function saveHistory(place) {
+  if (!history.includes(place)) {
+    history.push(place);
+  }
+  localStorage.setItem("history", JSON.stringify(history));
+}
+
+/* render history */
+function renderHistory() {
+  let list = document.getElementById("historyList");
+  list.innerHTML = "";
+
+  if (history.length === 0) {
+    list.innerHTML = "<p style='text-align:center;color:gray'>No history yet 😴</p>";
+    return;
+  }
+
+  history.slice().reverse().forEach(item => {
+    let div = document.createElement("div");
+    div.className = "card";
+    div.innerHTML = `<h3>📍 ${item}</h3><p>Viewed recently</p>`;
+    div.onclick = () => openDetail(item, "From history 📌");
+    list.appendChild(div);
+  });
+}
+
+/* save place */
+function savePlace(place) {
+  if (!saved.includes(place)) {
+    saved.push(place);
+  }
+  localStorage.setItem("saved", JSON.stringify(saved));
+  alert("Saved ❤️");
+}
+
+</script>
+
 </body>
 </html>
