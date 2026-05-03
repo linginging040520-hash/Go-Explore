@@ -49,7 +49,6 @@ const attractions = [
     description: "Pristine remote beaches where jungle meets the sea.",
     rating: 4.6
   }
-
 ];
 
 // 2. Hero Image Slideshow
@@ -117,6 +116,8 @@ function filterDestinations() {
 
   loadDestinations(filtered);
   saveSearchHistory(input.value);
+
+  updateDashboard();
 }
 
 // 5. Search History
@@ -142,7 +143,7 @@ function savePlace(place) {
 
   localStorage.setItem("savedPlaces", JSON.stringify(savedPlaces));
 
-  alert("Saved ❤️");
+  updateDashboard();
 }
 
 // 7. Dashboard Update
@@ -150,6 +151,8 @@ function updateDashboard() {
   const savedList = document.getElementById("saved-locations-list");
   const searchList = document.getElementById("search-history-list");
   const bookingList = document.getElementById("booking-history-list");
+
+  let bookings = JSON.parse(localStorage.getItem("bookings")) || [];
 
   if (savedList) {
     savedList.innerHTML = savedPlaces.length
@@ -176,3 +179,4 @@ function updateDashboard() {
 
 // 8. Initial Load
 loadDestinations();
+updateDashboard();
